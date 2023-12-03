@@ -133,6 +133,7 @@ export const StreamerItem: React.FC<StreamerItemProps> = ({
     if (!streamer.prevScore) return;
 
     let newScore = streamer.prevScore;
+    let timeout: NodeJS.Timeout;
     const steps = 50;
     const delay = 2;
 
@@ -143,12 +144,16 @@ export const StreamerItem: React.FC<StreamerItemProps> = ({
       const updatedScore = currentScore + increment;
       setScore(updatedScore);
 
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         updateScore(updatedScore, targetScore);
       }, delay);
     };
 
     updateScore(newScore, streamer.score);
+
+    return () => {
+      clearTimeout(timeout);
+    };
   }, [streamer.score, streamer.prevScore, streamer.userID]);
 
   const avatarPath = loadAvatar(streamer.picture);
