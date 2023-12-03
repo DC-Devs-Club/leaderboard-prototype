@@ -121,9 +121,7 @@ const ScorePostfix = styled.span`
 `;
 
 const loadAvatar = (index: string) =>
-  `${
-    process.env.NODE_ENV === "development" ? "" : "/leaderboard-prototype"
-  }/assets/avatars/avatar${index}.png`;
+  `/leaderboard-prototype/assets/avatars/avatar${index}.png`;
 
 export const StreamerItem: React.FC<StreamerItemProps> = ({
   streamer,
