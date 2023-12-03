@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import styled from "styled-components";
 
@@ -127,6 +127,30 @@ export const StreamerItem: React.FC<StreamerItemProps> = ({
   streamerRank,
   top,
 }) => {
+  const [score, setScore] = useState(streamer.score);
+
+  useEffect(() => {
+    if (!streamer.prevScore) return;
+
+    let newScore = streamer.prevScore;
+    const steps = 50;
+    const delay = 2;
+
+    const updateScore = (currentScore: number, targetScore: number) => {
+      if (currentScore >= targetScore) return;
+
+      const increment = Math.min(steps, targetScore - currentScore);
+      const updatedScore = currentScore + increment;
+      setScore(updatedScore);
+
+      setTimeout(() => {
+        updateScore(updatedScore, targetScore);
+      }, delay);
+    };
+
+    updateScore(newScore, streamer.score);
+  }, [streamer.score, streamer.prevScore, streamer.userID]);
+
   const avatarPath = loadAvatar(streamer.picture);
   return (
     <ListItem rank={streamerRank} top={top} key={streamer.userID}>
@@ -138,7 +162,7 @@ export const StreamerItem: React.FC<StreamerItemProps> = ({
         <Username className="username">{streamer.displayName}</Username>
       </UserInfo>
       <UserScoreItem>
-        <UserScore className="score-number">{streamer.score}</UserScore>
+        <UserScore className="score-number">{score}</UserScore>
         <ScorePostfix className="score-postfix">points</ScorePostfix>
       </UserScoreItem>
     </ListItem>

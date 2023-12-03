@@ -41,6 +41,7 @@ export const StreamersList: React.FC = () => {
       setStreamersData((prevState) => {
         const updatedData = [...prevState];
         updatedData?.forEach((streamer) => {
+          streamer.prevScore = streamer.score;
           streamer.score += Math.floor(Math.random() * 2500);
         });
         return updatedData.sort((a, b) => b.score - a.score);

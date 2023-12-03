@@ -3,4 +3,5 @@ export interface Streamer {
   displayName: string;
   picture: string;
   score: number;
+  prevScore?: number;
 }
