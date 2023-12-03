@@ -161,7 +161,6 @@ export const StreamerItem: React.FC<StreamerItemProps> = ({
 
   const avatarPath = loadAvatar(streamer.picture);
 
-  console.log(process.env.NODE_ENV);
   return (
     <ListItem rank={streamerRank} top={top} key={streamer.userID}>
       <UserInfo>
